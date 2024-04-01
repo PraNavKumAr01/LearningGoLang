@@ -5,30 +5,41 @@ import (
 	"strings"
 )
 
-func main() {
-	var fightName string = "Floyd V Conor"
-	const fightTickets int = 50
-	var remainingTickets uint = 50
-	var bookings []string
-
+func greetUser(fightName string, fightTickets uint, remainingTickets uint) {
 	fmt.Println("Welcome to the Boxing Show booking app")
 	fmt.Printf("Bookings for the fight %v are now open!!\n", fightName)
 	fmt.Printf("Out of %v There are %v tickets left!!\n", fightTickets, remainingTickets)
+}
+
+func userInputs() (string, string, uint, string) {
+	var firstName string
+	var lastName string
+	var userTickets uint
+	var email string
+
+	fmt.Println("Enter your first name")
+	fmt.Scan(&firstName)
+	fmt.Println("Enter your last name")
+	fmt.Scan(&lastName)
+	fmt.Println("Enter the number of tickets you want to book")
+	fmt.Scan(&userTickets)
+	fmt.Println("Enter the email you want to recieve the tickets")
+	fmt.Scan(&email)
+
+	return firstName, lastName, userTickets, email
+}
+
+func main() {
+	var fightName string = "Floyd V Conor"
+	const fightTickets uint = 50
+	var remainingTickets uint = 50
+	var bookings []string
+
+	greetUser(fightName, fightTickets, remainingTickets)
 
 	for remainingTickets > 0 {
-		var firstName string
-		var lastName string
-		var userTickets uint
-		var email string
 
-		fmt.Println("Enter your first name")
-		fmt.Scan(&firstName)
-		fmt.Println("Enter your last name")
-		fmt.Scan(&lastName)
-		fmt.Println("Enter the number of tickets you want to book")
-		fmt.Scan(&userTickets)
-		fmt.Println("Enter the email you want to recieve the tickets")
-		fmt.Scan(&email)
+		firstName, lastName, userTickets, email := userInputs()
 
 		var isValidName bool = len(firstName) >= 2 && len(lastName) >= 2
 		var isValidEmail bool = strings.Contains(email, "@")
@@ -58,13 +69,13 @@ func main() {
 
 		} else {
 			if !isValidName {
-				fmt.Printf("First name or Last name is an invalid input, Please try again!!")
+				fmt.Println("First name or Last name is an invalid input, Please try again!!")
 			}
 			if !isValidTicket {
 				fmt.Printf("We only have %v tickets available, %v tickets can not be booked!! Please try again\n", remainingTickets, userTickets)
 			}
 			if !isValidEmail {
-				fmt.Printf("Please enter a valid email address")
+				fmt.Println("Please enter a valid email address")
 			}
 		}
 	}
